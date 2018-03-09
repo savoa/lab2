@@ -261,5 +261,25 @@ begin
   --pixel_value
   --pixel_we
   
+  dir_red<= x"FF" when dir_pixel_column < 80 else
+				x"00" when dir_pixel_column < 160 else
+				x"FF" when dir_pixel_column < 240 else
+				x"00" when dir_pixel_column < 320 else
+				x"FF" when dir_pixel_column < 400 else
+				x"00";
+
+  dir_green<=x"FF" when dir_pixel_column < 80 else
+				x"00" when dir_pixel_column < 160 else
+				x"FF" when dir_pixel_column < 240 else
+				x"00" when dir_pixel_column < 320 else
+				x"FF" when dir_pixel_column < 400 else
+				x"00";
+            
+  dir_blue<=x"FF" when dir_pixel_column < 80 else
+				x"00" when dir_pixel_column < 160 else
+				x"FF" when dir_pixel_column < 240 else
+				x"00" when dir_pixel_column < 320 else
+				x"FF" when dir_pixel_column < 400 else
+				x"00";
   
 end rtl;
