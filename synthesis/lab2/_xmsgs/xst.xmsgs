@@ -88,30 +88,6 @@ It will be removed from the design.
 
 <msg type="info" file="Xst" num="3226" delta="old" >The RAM &lt;<arg fmt="%s" index="1">Mram_text_mem</arg>&gt; will be implemented as a BLOCK RAM, absorbing the following register(s):</msg>
 
-<msg type="info" file="Xst" num="2261" delta="new" >The FF/Latch &lt;<arg fmt="%s" index="1">red_r_0</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">vga_sync</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">2 FFs/Latches</arg>, which will be removed : <arg fmt="%s" index="4">&lt;green_r_0&gt; &lt;blue_r_0&gt; </arg>
-</msg>
-
-<msg type="info" file="Xst" num="2261" delta="new" >The FF/Latch &lt;<arg fmt="%s" index="1">red_r_4</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">vga_sync</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">2 FFs/Latches</arg>, which will be removed : <arg fmt="%s" index="4">&lt;green_r_4&gt; &lt;blue_r_4&gt; </arg>
-</msg>
-
-<msg type="info" file="Xst" num="2261" delta="new" >The FF/Latch &lt;<arg fmt="%s" index="1">red_r_3</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">vga_sync</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">2 FFs/Latches</arg>, which will be removed : <arg fmt="%s" index="4">&lt;green_r_3&gt; &lt;blue_r_3&gt; </arg>
-</msg>
-
-<msg type="info" file="Xst" num="2261" delta="new" >The FF/Latch &lt;<arg fmt="%s" index="1">red_r_7</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">vga_sync</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">2 FFs/Latches</arg>, which will be removed : <arg fmt="%s" index="4">&lt;green_r_7&gt; &lt;blue_r_7&gt; </arg>
-</msg>
-
-<msg type="info" file="Xst" num="2261" delta="new" >The FF/Latch &lt;<arg fmt="%s" index="1">red_r_1</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">vga_sync</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">2 FFs/Latches</arg>, which will be removed : <arg fmt="%s" index="4">&lt;green_r_1&gt; &lt;blue_r_1&gt; </arg>
-</msg>
-
-<msg type="info" file="Xst" num="2261" delta="new" >The FF/Latch &lt;<arg fmt="%s" index="1">red_r_5</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">vga_sync</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">2 FFs/Latches</arg>, which will be removed : <arg fmt="%s" index="4">&lt;green_r_5&gt; &lt;blue_r_5&gt; </arg>
-</msg>
-
-<msg type="info" file="Xst" num="2261" delta="new" >The FF/Latch &lt;<arg fmt="%s" index="1">red_r_2</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">vga_sync</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">2 FFs/Latches</arg>, which will be removed : <arg fmt="%s" index="4">&lt;green_r_2&gt; &lt;blue_r_2&gt; </arg>
-</msg>
-
-<msg type="info" file="Xst" num="2261" delta="new" >The FF/Latch &lt;<arg fmt="%s" index="1">red_r_6</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">vga_sync</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">2 FFs/Latches</arg>, which will be removed : <arg fmt="%s" index="4">&lt;green_r_6&gt; &lt;blue_r_6&gt; </arg>
-</msg>
-
 <msg type="warning" file="Xst" num="2677" delta="old" >Node &lt;<arg fmt="%s" index="1">vga_top_i/Maddsub_n0100</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">top</arg>&gt;.
 </msg>
 
@@ -223,7 +199,13 @@ It will be removed from the design.
 <msg type="warning" file="Xst" num="1710" delta="old" >FF/Latch &lt;<arg fmt="%s" index="1">vga_top_i/vga_i/vga_sync_i/v_count_r_10</arg>&gt; (without init value) has a constant value of <arg fmt="%d" index="2">0</arg> in block &lt;<arg fmt="%s" index="3">top</arg>&gt;. This FF/Latch will be trimmed during the optimization process.
 </msg>
 
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">vga_top_i/vga_i/vga_sync_i/blue_r_7</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">7 FFs/Latches</arg>, which will be removed : <arg fmt="%s" index="4">&lt;vga_top_i/vga_i/vga_sync_i/blue_r_6&gt; &lt;vga_top_i/vga_i/vga_sync_i/blue_r_5&gt; &lt;vga_top_i/vga_i/vga_sync_i/blue_r_4&gt; &lt;vga_top_i/vga_i/vga_sync_i/blue_r_3&gt; &lt;vga_top_i/vga_i/vga_sync_i/blue_r_2&gt; &lt;vga_top_i/vga_i/vga_sync_i/blue_r_1&gt; &lt;vga_top_i/vga_i/vga_sync_i/blue_r_0&gt; </arg>
+</msg>
+
 <msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">vga_top_i/vga_i/vga_sync_i/red_r_7</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">7 FFs/Latches</arg>, which will be removed : <arg fmt="%s" index="4">&lt;vga_top_i/vga_i/vga_sync_i/red_r_6&gt; &lt;vga_top_i/vga_i/vga_sync_i/red_r_5&gt; &lt;vga_top_i/vga_i/vga_sync_i/red_r_4&gt; &lt;vga_top_i/vga_i/vga_sync_i/red_r_3&gt; &lt;vga_top_i/vga_i/vga_sync_i/red_r_2&gt; &lt;vga_top_i/vga_i/vga_sync_i/red_r_1&gt; &lt;vga_top_i/vga_i/vga_sync_i/red_r_0&gt; </arg>
+</msg>
+
+<msg type="info" file="Xst" num="2261" delta="old" >The FF/Latch &lt;<arg fmt="%s" index="1">vga_top_i/vga_i/vga_sync_i/green_r_7</arg>&gt; in Unit &lt;<arg fmt="%s" index="2">top</arg>&gt; is equivalent to the following <arg fmt="%s" index="3">7 FFs/Latches</arg>, which will be removed : <arg fmt="%s" index="4">&lt;vga_top_i/vga_i/vga_sync_i/green_r_6&gt; &lt;vga_top_i/vga_i/vga_sync_i/green_r_5&gt; &lt;vga_top_i/vga_i/vga_sync_i/green_r_4&gt; &lt;vga_top_i/vga_i/vga_sync_i/green_r_3&gt; &lt;vga_top_i/vga_i/vga_sync_i/green_r_2&gt; &lt;vga_top_i/vga_i/vga_sync_i/green_r_1&gt; &lt;vga_top_i/vga_i/vga_sync_i/green_r_0&gt; </arg>
 </msg>
 
 </messages>
