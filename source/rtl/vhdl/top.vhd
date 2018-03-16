@@ -25,6 +25,7 @@ entity top is
     clk_i          : in  std_logic;
     reset_n_i      : in  std_logic;
     -- vga
+	 direct_mode_i 	: in std_logic;
     vga_hsync_o    : out std_logic;
     vga_vsync_o    : out std_logic;
     blank_o        : out std_logic;
@@ -147,16 +148,22 @@ architecture rtl of top is
   signal pixel_address       : std_logic_vector(GRAPH_MEM_ADDR_WIDTH-1 downto 0);
   signal pixel_value         : std_logic_vector(GRAPH_MEM_DATA_WIDTH-1 downto 0);
   signal pixel_we            : std_logic;
+  signal pixel_column           : std_logic_vector(GRAPH_MEM_ADDR_WIDTH-1 downto 0);
+  signal pixel_row           : std_logic_vector(GRAPH_MEM_ADDR_WIDTH-1 downto 0);
 
   signal pix_clock_s         : std_logic;
   signal vga_rst_n_s         : std_logic;
   signal pix_clock_n         : std_logic;
+ 
    
   signal dir_red             : std_logic_vector(7 downto 0);
   signal dir_green           : std_logic_vector(7 downto 0);
   signal dir_blue            : std_logic_vector(7 downto 0);
   signal dir_pixel_column    : std_logic_vector(10 downto 0);
   signal dir_pixel_row       : std_logic_vector(10 downto 0);
+  
+  signal brojac_mali 		  : std_logic_vector(31 downto 0);
+  signal brojac      		  : std_logic_vector(10 downto 0);
 
 begin
 
@@ -169,11 +176,12 @@ begin
   graphics_lenght <= conv_std_logic_vector(MEM_SIZE*8*8, GRAPH_MEM_ADDR_WIDTH);
   
   -- removed to inputs pin
-  direct_mode <= '0';
-  display_mode     <= "01";  -- 01 - text mode, 10 - graphics mode, 11 - text & graphics
+  --direct_mode <= '0';
+  display_mode <= "11";
+    -- 01 - text mode, 10 - graphics mode, 11 - text & graphicsz
   
   font_size        <= x"1";
-  show_frame       <= '1';
+  show_frame       <= '0';
   foreground_color <= x"FFFFFF";
   background_color <= x"000000";
   frame_color      <= x"FF0000";
@@ -261,65 +269,100 @@ begin
   --pixel_address
   --pixel_value
   --pixel_we
+ direct_mode <= direct_mode_i;
   
---  dir_red<= x"FF" when dir_pixel_column < 80 else
---				x"00" when dir_pixel_column < 160 else
---				x"00" when dir_pixel_column < 240 else
---				x"FF" when dir_pixel_column < 320 else
---				x"00" when dir_pixel_column < 400 else
---				x"FF" when dir_pixel_column < 480 else
---				x"FF" when dir_pixel_column < 560 else
---				x"00";
---
---  dir_green<=x"FF" when dir_pixel_column < 80 else
---				x"FF" when dir_pixel_column < 160 else
---				x"00" when dir_pixel_column < 240 else
---				x"00" when dir_pixel_column < 320 else
---				x"FF" when dir_pixel_column < 400 else
---				x"00" when dir_pixel_column < 480 else
---				x"FF" when dir_pixel_column < 560 else
---				x"00";
---            
---  dir_blue<=x"FF" when dir_pixel_column < 80 else
---				x"00" when dir_pixel_column < 160 else
---				x"FF" when dir_pixel_column < 240 else
---				x"00" when dir_pixel_column < 320 else
---				x"FF" when dir_pixel_column < 400 else
---				x"FF" when dir_pixel_column < 480 else
---				x"00" when dir_pixel_column < 560 else
---				x"00";
+ dir_red<= x"FF" when dir_pixel_column < 80 else
+				x"00" when dir_pixel_column < 160 else
+				x"00" when dir_pixel_column < 240 else
+				x"FF" when dir_pixel_column < 320 else
+				x"00" when dir_pixel_column < 400 else
+				x"FF" when dir_pixel_column < 480 else
+				x"FF" when dir_pixel_column < 560 else
+				x"00";
+
+  dir_green<=x"FF" when dir_pixel_column < 80 else
+				x"FF" when dir_pixel_column < 160 else
+				x"00" when dir_pixel_column < 240 else
+				x"00" when dir_pixel_column < 320 else
+				x"FF" when dir_pixel_column < 400 else
+				x"00" when dir_pixel_column < 480 else
+				x"FF" when dir_pixel_column < 560 else
+				x"00";
+            
+  dir_blue<=x"FF" when dir_pixel_column < 80 else
+			x"00" when dir_pixel_column < 160 else
+				x"FF" when dir_pixel_column < 240 else
+			x"00" when dir_pixel_column < 320 else
+				x"FF" when dir_pixel_column < 400 else
+				x"FF" when dir_pixel_column < 480 else
+				x"00" when dir_pixel_column < 560 else
+				x"00";
   
   --direct_mode <= '0';
   --display_mode <= "01";
   
+  
+  
  char_we <= '1';
+ pixel_address <= pixel_column + pixel_row;
   
 	process(pix_clock_s, reset_n_i) begin
 		if reset_n_i = '0' then
 			char_address <= (others=>'0');
+			brojac_mali <= (others=>'0');
+			brojac <= (others=>'0');
 		elsif rising_edge(pix_clock_s) then
 			if (char_address = "01001011000000") then
 				char_address <= (others=>'0');
 			else
 				char_address <= char_address + '1';
 			end if;
+			
+			if (brojac_mali < 25000000) then
+				brojac_mali <= brojac_mali + '1';
+			else
+				brojac_mali <= (others=>'0');
+				brojac <= brojac + '1';
+			end if;
 		end if;
 	end process;
   
-	char_value <=  "00" & x"B" when char_address = x"1" else		
-						"00" & x"F" when char_address = x"2" else		
-						"01" & x"3" when char_address = x"3" else		
-						"01" & x"4" when char_address = x"4" else		
-						"00" & x"1" when char_address = x"5" else		
-						"10" & x"0" when char_address = x"6" else		
-						"01" & x"3" when char_address = x"7" else		
-						"01" & x"6" when char_address = x"8" else		
-						"01" & x"2" when char_address = x"9" else		
-						"00" & x"4" when char_address = x"A" else		
-						"00" & x"C" when char_address = x"B" else		
-						"00" & x"1" when char_address = x"C" else		
-						"00" & x"E" when char_address = x"D" else		
+	char_value <=  "00" & x"D" when char_address = (x"101" + brojac) else		
+						"00" & x"F" when char_address = (x"102" + brojac) else		
+						"00" & x"F" when char_address = (x"103" + brojac) else		
+						"00" & x"F" when char_address = (x"104" + brojac)else		
+						"00" & x"F" when char_address = (x"105" + brojac) else		
+						"00" & x"F" when char_address = (x"106" + brojac) else		
+						"00" & x"F" when char_address = (x"107" + brojac) else		
+						"00" & x"F" when char_address = (x"108" + brojac) else		
+						"00" & x"F" when char_address = (x"109" + brojac) else		
+						"00" & x"F" when char_address = (x"10A" + brojac) else		
+						"00" & x"F" when char_address = (x"10B" + brojac) else		
+						"00" & x"F" when char_address = (x"10C" + brojac) else		
+						"00" & x"F" when char_address = (x"10D" + brojac) else		
 						"100000";
+						
+	pixel_we <= '1';
+	
+	process(pix_clock_s, reset_n_i) begin
+		if reset_n_i = '0' then
+			pixel_column <= (others=>'0');
+			pixel_row <= (others=>'0');
+		elsif rising_edge(pix_clock_s) then
+			if (pixel_column = 20) then
+				pixel_column <= (others=>'0');
+				pixel_row <= pixel_row + 20;
+			elsif (pixel_row = 480 ) then
+				pixel_column <= (others=>'0');
+				pixel_row <= (others=>'0');
+			else 
+				pixel_column <= pixel_column + 1;
+				pixel_row <= pixel_row;		
+			end if;
+		end if;
+	end process;
   
+  pixel_value <= X"FFFFBBBB" when pixel_column > 15 and pixel_row < 1240 and pixel_row > 200 else 
+					  X"00000000";
   
 end rtl;
